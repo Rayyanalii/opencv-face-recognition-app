@@ -9,6 +9,8 @@ if 'people_data' not in st.session_state:
     st.session_state.people_data = []
 if 'label_map' not in st.session_state:
     st.session_state.label_map = {}
+if 'trained' not in st.session_state:
+    st.session_state.trained = False
 
 person_name = st.text_input("Enter Person's Name:")
 person_images = st.file_uploader("Upload Images for This Person", type=['jpg', 'png','jpeg'], accept_multiple_files=True)
@@ -39,13 +41,14 @@ if st.button("Train Model"):
             st.session_state.label_map = label_map
             train_model(features, labels)
         st.success("Model has been trained successfully!")
+        st.session_state.trained = True
 st.markdown("---")
 
 st.subheader("Test Model")
 test_image = st.file_uploader("Upload a new image to test model with",type=['jpg', 'png','jpeg'])
 
 if st.button("Test Model"):
-    if test_image:
+    if test_image and st.session_state.trained:
         with st.spinner("Analyzing image... Please wait."):
             label, confidence, image, name = test_model(test_image, st.session_state.label_map)
 
@@ -54,4 +57,7 @@ if st.button("Test Model"):
             else:
                 st.write("No face was found by the model!")
     else:
-        st.warning("No image was uploaded.")
+        if not test_image:
+            st.warning("No image was uploaded.")
+        else:
+            st.warning("Train the model first")
