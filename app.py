@@ -34,17 +34,20 @@ if st.button("Train Model"):
     if len(st.session_state.people_data) < 1:
         st.warning("Add atleast 1 person for recognition.")
     else:
-        features,labels,label_map = faces_extraction(st.session_state.people_data)
-        st.session_state.label_map = label_map
-        train_model(features,labels)
+        with st.spinner("Training model... Please wait."):
+            features, labels, label_map = faces_extraction(st.session_state.people_data)
+            st.session_state.label_map = label_map
+            train_model(features, labels)
         st.success("Model has been trained successfully!")
+st.markdown("---")
 
 st.subheader("Test Model")
 test_image = st.file_uploader("Upload a new image to test model with",type=['jpg', 'png','jpeg'])
 
 if st.button("Test Model"):
     if test_image:
-        label,confidence,image,name = test_model(test_image,st.session_state.label_map)
+        with st.spinner("Analyzing image... Please wait."):
+            label, confidence, image, name = test_model(test_image, st.session_state.label_map)
         st.image(image,f"{name} detected with {confidence:.2f}% confidence level")
     else:
         st.warning("No image was uploaded.")
