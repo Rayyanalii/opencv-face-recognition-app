@@ -11,6 +11,9 @@ def test_model(image,label_map):
     img_np = np.array(img, dtype=np.uint8)
 
     faces_rect = haarCascade.detectMultiScale(img_np,1.1,5)
+    if len(faces_rect)==0:
+        return
+
     for rectangle in faces_rect:
         (x,y,w,h) = rectangle
         cropped = img_np[y:y+h,x:x+w]

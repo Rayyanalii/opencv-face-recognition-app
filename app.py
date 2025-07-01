@@ -48,6 +48,10 @@ if st.button("Test Model"):
     if test_image:
         with st.spinner("Analyzing image... Please wait."):
             label, confidence, image, name = test_model(test_image, st.session_state.label_map)
-        st.image(image,f"{name} detected with {confidence:.2f}% confidence level")
+
+            if label or confidence or name:
+                st.image(image,f"{name} detected with {confidence:.2f} confidence")
+            else:
+                st.write("No face was found by the model!")
     else:
         st.warning("No image was uploaded.")
