@@ -2,13 +2,13 @@
 
 A web-based facial recognition system built using OpenCV and Streamlit. This app allows users to:
 
-Upload images of people with custom labels
+- Upload images of people with custom labels
 
-Train OpenCV’s built-in face recognition model (LBPH-based)
+- Train OpenCV’s built-in face recognition model (LBPH-based)
 
-Test recognition on newly uploaded images
+- Test recognition on newly uploaded images
 
-View recognition confidence scores
+- View recognition confidence scores
 
 It’s a simple, intuitive way to explore OpenCV’s face recognition capabilities using an interactive UI.
 

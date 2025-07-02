@@ -11,6 +11,8 @@ if 'label_map' not in st.session_state:
     st.session_state.label_map = {}
 if 'trained' not in st.session_state:
     st.session_state.trained = False
+if 'minNeighbor' not in st.session_state:
+    st.session_state.minNeighbor = 5
 
 person_name = st.text_input("Enter Person's Name:")
 person_images = st.file_uploader("Upload Images for This Person", type=['jpg', 'png','jpeg'], accept_multiple_files=True)
@@ -32,16 +34,28 @@ if st.session_state.people_data:
 else:
     st.write("None")
 
+st.markdown("---")
+
+st.session_state.minNeighbor = st.slider("Min Neighbors (Increase if faces found > total images. Decrease for vice versa)", min_value=5, max_value=20, value=5)
+
 if st.button("Train Model"):
     if len(st.session_state.people_data) < 1:
         st.warning("Add atleast 1 person for recognition.")
     else:
         with st.spinner("Training model... Please wait."):
-            features, labels, label_map = faces_extraction(st.session_state.people_data)
-            st.session_state.label_map = label_map
-            train_model(features, labels)
-        st.success("Model has been trained successfully!")
-        st.session_state.trained = True
+            features, labels, label_map,total_images,faces_found = faces_extraction(st.session_state.people_data,st.session_state.minNeighbor)
+            if faces_found == 0:
+                st.warning("0 Faces Found! Please try uploading clearer images")
+            else:
+                st.session_state.label_map = label_map
+                train_model(features, labels)
+                st.success(f"""Model has been trained successfully!
+                Total images: {total_images}
+                Faces Found: {faces_found}""")
+                st.session_state.trained = True
+
+st.info("ℹ️ If the number of **faces found is less than total images at minNeighbor = 5**, it likely means some images were unclear or the face wasn't detected properly.")
+
 st.markdown("---")
 
 st.subheader("Test Model")
