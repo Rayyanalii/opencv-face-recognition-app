@@ -67,7 +67,10 @@ if st.button("Test Model"):
             label, confidence, image, name = test_model(test_image, st.session_state.label_map)
 
             if label or confidence or name:
-                st.image(image,f"{name} detected with {confidence:.2f} confidence")
+                if confidence < 70:
+                    st.image(image,f"{name} detected with {confidence:.2f} confidence")
+                else:
+                    st.warning("No good match found! Try adding more images for the subject!")
             else:
                 st.write("No face was found by the model!")
     else:

@@ -1,34 +1,41 @@
 # OpenCV Face Recognition Web App
 
-A web-based facial recognition system built using OpenCV and Streamlit. This app allows users to:
+A simple, interactive facial recognition system built with OpenCV and Streamlit.
 
-- Upload images of people with custom labels
+## Features
 
-- Train OpenCV’s built-in face recognition model (LBPH-based)
-
-- Test recognition on newly uploaded images
-
-- View recognition confidence scores
-
-It’s a simple, intuitive way to explore OpenCV’s face recognition capabilities using an interactive UI.
+- Upload labeled face images
+- Train OpenCV’s LBPH face recognizer
+- Test predictions on new images
+- See confidence scores
+- Streamlit-based frontend UI
+- Image preprocessing and face extraction
 
 ## Tech Stack
 
-    Python
-    OpenCV (Face Detection & Recognition)
-    Streamlit (Frontend Interface)
-    NumPy, PIL.
+**Client:** Streamlit  
+**Server:** Python, OpenCV, NumPy, PIL
 
-## How It Works
+## Installation
 
-### Upload Images
+Clone the project and install dependencies:
 
-Upload frontal face images and assign a unique label for each person.
+    pip install -r requirements.txt
 
-### Train Model
+Run the Streamlit app:
 
-On the press of a button, the model is trained using the uploaded images and labels.
+    streamlit run app.py
 
-### Test Images
+## Screenshots
 
-Upload a new image. If a trained face is detected, the model predicts the label with a confidence score.
+To be added later.
+
+## Notes
+
+- It's better for the model to recieve multiple images of a subject to perform better.
+- If "faces found" is less than "total images", it usually means the image was unclear or the face wasn't detected.
+- Uploaded images are resized for consistent detection.
+
+## Authors
+
+- [@Rayyanalii](https://github.com/Rayyanalii)

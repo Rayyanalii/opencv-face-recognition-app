@@ -12,7 +12,7 @@ def test_model(image,label_map):
 
     faces_rect = haarCascade.detectMultiScale(img_np,1.1,5)
     if len(faces_rect)==0:
-        return
+        return None, None, None, None
 
     for rectangle in faces_rect:
         (x,y,w,h) = rectangle
